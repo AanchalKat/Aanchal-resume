@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Generate PDF resume from resume-pdf.html with local HTTP server for assets."""
+"""Generate PDF resumes from HTML sources with local HTTP server for assets."""
 
 from __future__ import annotations
 
+import json
 import shutil
 import subprocess
 import sys
@@ -13,9 +14,13 @@ from pathlib import Path
 from threading import Thread
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-HTML_PATH = PROJECT_ROOT / "resume-pdf.html"
-PDF_PATH = PROJECT_ROOT / "assets" / "aanchal-kataria-resume.pdf"
 PORT = 8765
+LOCAL_CONFIG_PATH = PROJECT_ROOT / ".resume-local.json"
+WEBSITE_HTML = PROJECT_ROOT / "resume-pdf.html"
+JOB_HTML = PROJECT_ROOT / "resume-pdf-job-application.html"
+WEBSITE_PDF = PROJECT_ROOT / "assets" / "aanchal-kataria-resume.pdf"
+JOB_PDF = PROJECT_ROOT / "assets" / "aanchal-kataria-resume-job-application.pdf"
+CONTACT_MARKER = "<h2>Contact</h2>"
 
 CHROME_PATHS = [
     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
@@ -31,6 +36,32 @@ def findChrome() -> str | None:
     return shutil.which("google-chrome") or shutil.which("chromium")
 
 
+def loadPhoneNumber() -> str:
+    if not LOCAL_CONFIG_PATH.exists():
+        raise FileNotFoundError(
+            f"Missing {LOCAL_CONFIG_PATH.name}. Copy .resume-local.json.example and set your phone number."
+        )
+
+    config = json.loads(LOCAL_CONFIG_PATH.read_text(encoding="utf-8"))
+    phone = str(config.get("phone", "")).strip()
+    if not phone or "X" in phone:
+        raise ValueError(
+            f"Set a valid phone number in {LOCAL_CONFIG_PATH.name} before generating the job application PDF."
+        )
+    return phone
+
+
+def buildJobApplicationHtml() -> None:
+    phone = loadPhoneNumber()
+    source = WEBSITE_HTML.read_text(encoding="utf-8")
+    if CONTACT_MARKER not in source:
+        raise ValueError(f"Contact section marker not found in {WEBSITE_HTML.name}")
+
+    phoneLine = f'        <div class="contact-item"><strong>Phone</strong>{phone}</div>\n'
+    jobHtml = source.replace(CONTACT_MARKER, f"{CONTACT_MARKER}\n{phoneLine}", 1)
+    JOB_HTML.write_text(jobHtml, encoding="utf-8")
+
+
 def startServer() -> ThreadingHTTPServer:
     handler = partial(SimpleHTTPRequestHandler, directory=str(PROJECT_ROOT))
     server = ThreadingHTTPServer(("127.0.0.1", PORT), handler)
@@ -39,8 +70,8 @@ def startServer() -> ThreadingHTTPServer:
     return server
 
 
-def generateWithChrome(chromePath: str, pageUrl: str) -> None:
-    PDF_PATH.parent.mkdir(parents=True, exist_ok=True)
+def generateWithChrome(chromePath: str, pageUrl: str, pdfPath: Path) -> None:
+    pdfPath.parent.mkdir(parents=True, exist_ok=True)
     command = [
         chromePath,
         "--headless=new",
@@ -49,15 +80,15 @@ def generateWithChrome(chromePath: str, pageUrl: str) -> None:
         "--no-pdf-header-footer",
         "--run-all-compositor-stages-before-draw",
         "--virtual-time-budget=25000",
-        f"--print-to-pdf={PDF_PATH}",
+        f"--print-to-pdf={pdfPath}",
         pageUrl,
     ]
     subprocess.run(command, check=True, capture_output=True, text=True)
 
 
 def main() -> int:
-    if not HTML_PATH.exists():
-        print(f"Missing source HTML: {HTML_PATH}", file=sys.stderr)
+    if not WEBSITE_HTML.exists():
+        print(f"Missing source HTML: {WEBSITE_HTML}", file=sys.stderr)
         return 1
 
     photoPath = PROJECT_ROOT / "assets" / "aanchal-photo.png"
@@ -72,19 +103,33 @@ def main() -> int:
         )
         return 1
 
+    try:
+        buildJobApplicationHtml()
+    except (FileNotFoundError, ValueError) as error:
+        print(f"Warning: {error}", file=sys.stderr)
+        print("Skipping job application PDF.", file=sys.stderr)
+
+    variants = [
+        (WEBSITE_HTML, WEBSITE_PDF, "Website resume (no phone)"),
+        (JOB_HTML, JOB_PDF, "Job application resume (with phone)"),
+    ]
+
     server = startServer()
-    pageUrl = f"http://127.0.0.1:{PORT}/resume-pdf.html"
 
     try:
         time.sleep(0.5)
-        generateWithChrome(chromePath, pageUrl)
+        for htmlPath, pdfPath, label in variants:
+            if not htmlPath.exists():
+                continue
+            pageUrl = f"http://127.0.0.1:{PORT}/{htmlPath.name}"
+            generateWithChrome(chromePath, pageUrl, pdfPath)
+            print(f"Generated ({label}): {pdfPath}")
     except subprocess.CalledProcessError as error:
         print(error.stderr or error.stdout or str(error), file=sys.stderr)
         return 1
     finally:
         server.shutdown()
 
-    print(f"Generated: {PDF_PATH}")
     return 0
 
 

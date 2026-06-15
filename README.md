@@ -18,11 +18,23 @@ python3 -m http.server 8080
 
 Open [http://localhost:8080](http://localhost:8080).
 
-## Regenerate PDF resume
+## Regenerate PDF resumes
+
+Generates two PDFs:
+
+| File | Use |
+|------|-----|
+| `assets/aanchal-kataria-resume.pdf` | Website download (no phone) |
+| `assets/aanchal-kataria-resume-job-application.pdf` | Job applications (with phone, local only) |
 
 ```bash
+cp .resume-local.json.example .resume-local.json   # first time only
+# Edit .resume-local.json with your phone number
+
 python3 scripts/generate_resume_pdf.py
 ```
+
+The job application PDF and phone config are **gitignored** and stay on your machine only.
 
 ## Project structure
 
