@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Aanchal Kataria — Resume</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    @page { size: letter; margin: 0; }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+
+    body {
+      font-family: "DM Sans", Helvetica, Arial, sans-serif;
+      font-size: 9.5pt;
+      line-height: 1.4;
+      color: #1a1a1f;
+      background: #fff;
+    }
+
+    .page {
+      width: 8.5in;
+      height: 11in;
+      overflow: hidden;
+      page-break-after: always;
+      background: #fff;
+    }
+
+    .page:last-child { page-break-after: auto; }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 2.35in 1fr;
+      height: 11in;
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      background: #1e2a3a;
+      color: #fff;
+      padding: 22px 18px;
+    }
+
+    .photo-wrap {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 18px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid #c45c26;
+      background: #f5f2ee;
+    }
+
+    .photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .sidebar h2 {
+      font-family: "DM Sans", Helvetica, Arial, sans-serif;
+      font-size: 8.5pt;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      line-height: 1.4;
+      color: #e8783a;
+      margin-bottom: 8px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .sidebar h2:not(:first-of-type) { margin-top: 16px; }
+
+    .contact-item {
+      font-size: 8.5pt;
+      color: rgba(255,255,255,0.88);
+      margin-bottom: 7px;
+      line-height: 1.35;
+    }
+
+    .contact-item strong {
+      display: block;
+      font-size: 7pt;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      line-height: 1.4;
+      color: #e8783a;
+      margin-bottom: 1px;
+    }
+
+    .skill-tag {
+      display: inline-block;
+      font-size: 7.8pt;
+      color: rgba(255,255,255,0.92);
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 3px;
+      padding: 3px 6px;
+      margin: 0 4px 4px 0;
+    }
+
+    .sidebar-list li {
+      font-size: 8.5pt;
+      color: rgba(255,255,255,0.88);
+      margin-bottom: 6px;
+      padding-left: 10px;
+      position: relative;
+      list-style: none;
+    }
+
+    .sidebar-list li::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 6px;
+      width: 4px; height: 4px;
+      background: #c45c26;
+      border-radius: 50%;
+    }
+
+    .sidebar-list .t { font-weight: 600; display: block; }
+    .sidebar-list .s { font-size: 7.8pt; color: rgba(255,255,255,0.65); }
+
+    /* ── Main ── */
+    .main {
+      padding: 24px 26px 20px 22px;
+    }
+
+    .main h1 {
+      font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+      font-size: 28pt;
+      font-weight: 600;
+      color: #1e2a3a;
+      line-height: 1.2;
+      letter-spacing: 0.01em;
+      margin-bottom: 6px;
+    }
+
+    .main .role {
+      font-family: "DM Sans", Helvetica, Arial, sans-serif;
+      font-size: 10pt;
+      font-weight: 600;
+      color: #c45c26;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      line-height: 1.45;
+      margin-bottom: 12px;
+    }
+
+    .summary {
+      font-size: 9.5pt;
+      color: #3d3d45;
+      line-height: 1.42;
+      text-align: justify;
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #e8e4df;
+    }
+
+    h2.section {
+      font-family: "DM Sans", Helvetica, Arial, sans-serif;
+      font-size: 11pt;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      line-height: 1.45;
+      color: #1e2a3a;
+      margin-bottom: 8px;
+      padding-bottom: 5px;
+      border-bottom: 2px solid #c45c26;
+    }
+
+    h2.section.spaced { margin-top: 12px; }
+
+    .job { margin-bottom: 10px; }
+
+    .job-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 3px;
+    }
+
+    .job-title {
+      font-size: 10pt;
+      font-weight: 700;
+      line-height: 1.4;
+      letter-spacing: 0.01em;
+      color: #1e2a3a;
+    }
+
+    .job-meta {
+      font-size: 8.8pt;
+      font-weight: 600;
+      line-height: 1.35;
+      color: #c45c26;
+    }
+
+    .job-date {
+      font-size: 8pt;
+      font-weight: 600;
+      color: #fff;
+      background: #1e2a3a;
+      padding: 3px 9px;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+
+    .job ul { padding-left: 14px; }
+
+    .job li {
+      font-size: 9pt;
+      color: #3d3d45;
+      margin-bottom: 3px;
+      line-height: 1.35;
+    }
+
+    .job li::marker { color: #c45c26; }
+
+    .tech {
+      font-size: 8pt;
+      color: #5c5c66;
+      background: #faf9f7;
+      border-left: 2px solid #c45c26;
+      padding: 4px 8px;
+      margin-top: 3px;
+      line-height: 1.32;
+    }
+
+    .tech strong { color: #1e2a3a; }
+
+    .highlight-box {
+      background: #faf9f7;
+      border-left: 3px solid #c45c26;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .highlight-box p {
+      font-size: 9pt;
+      color: #3d3d45;
+      line-height: 1.38;
+      margin-bottom: 6px;
+    }
+
+    .highlight-box p:last-child { margin-bottom: 0; }
+
+    .awards-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px 12px;
+    }
+
+    .award-card {
+      font-size: 8.5pt;
+      color: #3d3d45;
+      padding: 8px 10px;
+      background: #faf9f7;
+      border-left: 2px solid #c45c26;
+      border-radius: 0 4px 4px 0;
+      line-height: 1.35;
+    }
+
+    .award-card strong {
+      display: block;
+      color: #1e2a3a;
+      font-size: 9pt;
+      margin-bottom: 2px;
+    }
+
+    .page2-header {
+      background: #1e2a3a;
+      color: #fff;
+      padding: 12px 26px;
+      font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+      font-size: 14pt;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      line-height: 1.4;
+    }
+
+    .page2-header .subtitle {
+      font-family: "DM Sans", Helvetica, Arial, sans-serif;
+      font-size: 9pt;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: rgba(255, 255, 255, 0.85);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PAGE 1 -->
+  <div class="page">
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="photo-wrap">
+          <img src="assets/aanchal-photo.png" alt="Aanchal Kataria">
+        </div>
+
+        <h2>Contact</h2>
+        <div class="contact-item"><strong>Email</strong>aanchalkataria7@gmail.com</div>
+        <div class="contact-item"><strong>Location</strong>Gurgaon, Haryana, India</div>
+        <div class="contact-item"><strong>LinkedIn</strong>linkedin.com/in/aanchal-kataria-52935a10a</div>
+
+        <h2>Skills</h2>
+        <div>
+          <span class="skill-tag">Selenium WebDriver</span>
+          <span class="skill-tag">Karate</span>
+          <span class="skill-tag">Rest Assured</span>
+          <span class="skill-tag">TestNG</span>
+          <span class="skill-tag">Cucumber BDD</span>
+          <span class="skill-tag">Postman</span>
+          <span class="skill-tag">Jenkins</span>
+          <span class="skill-tag">Java</span>
+          <span class="skill-tag">REST API</span>
+          <span class="skill-tag">SOAP API</span>
+          <span class="skill-tag">SQL</span>
+          <span class="skill-tag">JIRA</span>
+          <span class="skill-tag">Git</span>
+          <span class="skill-tag">Maven</span>
+          <span class="skill-tag">JMeter</span>
+          <span class="skill-tag">Agile</span>
+          <span class="skill-tag">SAFe</span>
+          <span class="skill-tag">Azure AZ-900</span>
+        </div>
+
+        <h2>Languages</h2>
+        <ul class="sidebar-list">
+          <li>English — Professional</li>
+          <li>Hindi — Native</li>
+        </ul>
+      </aside>
+
+      <main class="main">
+        <h1>Aanchal Kataria</h1>
+        <p class="role">Senior Test Automation Engineer | SDET</p>
+
+        <p class="summary">
+          Over 10 years of experience in quality engineering with a primary focus on test automation,
+          API testing, and building scalable automation frameworks for complex enterprise systems.
+          Extensive background in regression optimization, CI/CD integration, and Agile delivery across
+          BFSI, Travel, and Insurance domains. Strong expertise in Selenium WebDriver, Rest Assured,
+          Karate, and Cucumber (BDD). Passionate about driving quality strategy through intelligent
+          automation, defect lifecycle management, and mentoring high-performing QA teams.
+        </p>
+
+        <h2 class="section">Professional Experience</h2>
+
+        <article class="job">
+          <div class="job-head">
+            <div>
+              <div class="job-title">Automation Test Specialist (Senior SDET)</div>
+              <div class="job-meta">IBM · BFSI &amp; Travel · Gurgaon</div>
+            </div>
+            <span class="job-date">Apr 2022 — Present</span>
+          </div>
+          <ul>
+            <li>Led the design and development of scalable automation frameworks using Selenium WebDriver, Rest Assured, TestNG, Maven, and Karate with BDD (Cucumber) for REST API and UI workflows.</li>
+            <li>Developed, reviewed, and maintained automated regression test suites following Page Object Model (POM), ensuring high-quality software delivery and regression stability.</li>
+            <li>Refactored and optimized automation frameworks, improving test execution efficiency, code maintainability, and test coverage by 40%.</li>
+            <li>Integrated automation with CI/CD pipelines using Jenkins, GitHub, and Azure Repos, reducing release cycle by 25%.</li>
+            <li>Managed defect lifecycle by logging, tracking, and validating issues using JIRA, TestRail, and Zephyr; reduced UAT issues through early root cause analysis.</li>
+            <li>Actively participated in Agile ceremonies (daily stand-ups, sprint planning, retrospectives) and mentored junior QA engineers.</li>
+          </ul>
+          <p class="tech"><strong>Tech:</strong> Java, Selenium, Rest Assured, Karate, TestNG, Cucumber, Maven, Jenkins, Postman, Newman, JMeter, JIRA, TestRail, Zephyr, GitHub, Azure Repos, Oracle, SQL Server</p>
+        </article>
+
+        <article class="job">
+          <div class="job-head">
+            <div>
+              <div class="job-title">Test Specialist</div>
+              <div class="job-meta">Fiserv · Fintech · Gurgaon</div>
+            </div>
+            <span class="job-date">May 2021 — Mar 2022</span>
+          </div>
+          <ul>
+            <li>Developed, reviewed, and maintained test scripts to ensure high-quality software delivery across functional, smoke, integration, and regression testing.</li>
+            <li>Executed regression test suites, analyzed results, and identified defects to improve software quality across environments.</li>
+            <li>Managed defect lifecycle by logging, tracking, and validating issues in TFS in collaboration with cross-functional teams.</li>
+            <li>Participated in Agile ceremonies and delivered client demos for features developed by the Scrum team.</li>
+          </ul>
+          <p class="tech"><strong>Tech:</strong> Functional Testing, JIRA, DNA, Oracle, TFS, SQL, HP ALM, Agile, Scrum, Confluence</p>
+        </article>
+
+        <article class="job">
+          <div class="job-head">
+            <div>
+              <div class="job-title">Test Analyst</div>
+              <div class="job-meta">Tata Consultancy Services · Travel · Gurgaon</div>
+            </div>
+            <span class="job-date">Mar 2016 — Apr 2021</span>
+          </div>
+          <ul>
+            <li>Designed and maintained automation test scripts integrated with Jenkins CI/CD, reducing manual testing time by 40%.</li>
+            <li>Refactored and enhanced automation frameworks using Selenium WebDriver and Java, improving execution efficiency and long-term maintainability.</li>
+            <li>Enhanced and extended the automation framework to support new features, improve scalability, and adapt to evolving technologies.</li>
+            <li>Championed migration from Waterfall to Scaled Agile Framework (SAFe); expert in STLC and SDLC across Agile methodologies.</li>
+          </ul>
+          <p class="tech"><strong>Tech:</strong> Selenium WebDriver, SOAP UI, API Testing, JIRA, Jenkins, Maven, Java, Git, Zephyr, HP ALM, Confluence</p>
+        </article>
+      </main>
+    </div>
+  </div>
+
+  <!-- PAGE 2 -->
+  <div class="page">
+    <div class="page2-header">Aanchal Kataria <span class="subtitle">· Senior SDET</span></div>
+    <div class="layout">
+      <aside class="sidebar">
+        <h2>Education</h2>
+        <ul class="sidebar-list">
+          <li><span class="t">M.Tech — Computer Science</span><span class="s">Kurukshetra University · 2015 · 76.2%</span></li>
+          <li><span class="t">B.Tech — Computer Engineering</span><span class="s">Kurukshetra University · 2012 · 80.6%</span></li>
+        </ul>
+
+        <h2>Certifications</h2>
+        <ul class="sidebar-list">
+          <li><span class="t">Azure Fundamentals AZ-900</span><span class="s">Microsoft · Nov 2022</span></li>
+          <li><span class="t">SAFe 5 &amp; 4.6 Practitioner</span><span class="s">Scaled Agile</span></li>
+        </ul>
+
+        <h2>Domains</h2>
+        <ul class="sidebar-list">
+          <li>Travel &amp; Hospitality</li>
+          <li>Retail Banking &amp; BFSI</li>
+          <li>Insurance &amp; Fintech</li>
+        </ul>
+      </aside>
+
+      <main class="main">
+        <h2 class="section">Key Achievements &amp; Impact</h2>
+        <div class="highlight-box">
+          <p><strong>IBM:</strong> Delivered Newman and Postman POCs automating legacy manual processes, reducing manual effort by 20%. Performed JMeter performance baseline testing and SQL-based backend validations on Oracle and SQL Server.</p>
+          <p><strong>Fiserv:</strong> Triaged bugs across environments ensuring consistency; reviewed and updated test cases for production releases with onshore team coordination.</p>
+          <p><strong>TCS:</strong> Restructured automation framework reducing test case creation and execution time by 30%. Collaborated with upper management to implement testing processes, increasing customer satisfaction by 10%.</p>
+        </div>
+
+        <h2 class="section spaced">Awards &amp; Recognition</h2>
+        <div class="awards-grid">
+          <div class="award-card"><strong>Client &amp; Partner Success Award 2026</strong>Outstanding delivery and client impact at IBM</div>
+          <div class="award-card"><strong>Client &amp; Partner Success Award 2023</strong>Outstanding delivery and client impact at IBM</div>
+          <div class="award-card"><strong>Manager's Choice Award (4×)</strong>Consistently recognised by IBM leadership</div>
+          <div class="award-card"><strong>Level 4 Award</strong>Top performance recognition at Fiserv</div>
+          <div class="award-card"><strong>Technical Excellence Award (5×)</strong>Travelport Client at TCS</div>
+        </div>
+
+        <h2 class="section spaced">Core Competencies</h2>
+        <div class="highlight-box">
+          <p>Test Automation · API Testing (REST/SOAP) · Regression Optimization · Page Object Model · CI/CD Integration · Performance Testing · Database Validation · Risk-Based Testing · Defect Lifecycle Management · Cross-Functional Collaboration · QA Team Leadership</p>
+        </div>
+      </main>
+    </div>
+  </div>
+
+</body>
+</html>
